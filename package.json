@@ -1,0 +1,57 @@
+{
+  "name": "kintone-ic-loss-plugin",
+  "version": "1.0.0",
+  "description": "交通系ICカードや社員証の紛失時緊急対応支援プラグイン（IPAガイドライン準拠）",
+  "main": "src/js/common/index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "test": "jest",
+    "test:security": "jest tests/security/",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "security:audit": "npm audit",
+    "security:check": "node tests/security/security-check.js"
+  },
+  "keywords": [
+    "kintone",
+    "plugin",
+    "ic-card",
+    "security",
+    "ipa-compliant",
+    "nagoya",
+    "transportation"
+  ],
+  "author": {
+    "name": "Kei-Adachi0709",
+    "email": "kei.adachi0709@example.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kei-Adachi0709/kintone-ic-loss-plugin.git"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "jest": "^29.5.0",
+    "eslint": "^8.44.0",
+    "eslint-config-standard": "^17.1.0",
+    "@kintone/webpack-plugin-kintone-plugin": "^7.0.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "security": {
+    "compliance": "IPA安全なウェブサイトの作り方準拠",
+    "hashAlgorithm": "PBKDF2-SHA512",
+    "iterations": 100000,
+    "saltLength": 32
+  }
+}

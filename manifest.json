@@ -1,0 +1,50 @@
+{
+  "manifest_version": 1,
+  "version": "1.0.0",
+  "type": "APP",
+  "name": {
+    "ja": "交通系ICカード紛失対応プラグイン",
+    "en": "IC Card Loss Response Plugin"
+  },
+  "description": {
+    "ja": "交通系ICカードや社員証の紛失時緊急対応を支援するプラグイン（IPAセキュリティガイドライン準拠）",
+    "en": "Emergency response support plugin for lost IC cards and employee IDs (IPA Security Guidelines compliant)"
+  },
+  "icon": "images/icon.png",
+  "homepage_url": {
+    "ja": "https://github.com/Kei-Adachi0709/kintone-ic-loss-plugin",
+    "en": "https://github.com/Kei-Adachi0709/kintone-ic-loss-plugin"
+  },
+  "desktop": {
+    "js": [
+      "src/js/common/index.js"
+    ],
+    "css": [
+      "src/css/style.css"
+    ]
+  },
+  "config": {
+    "html": "src/html/config.html",
+    "js": [
+      "src/js/config/config.js"
+    ],
+    "css": [
+      "src/css/config.css"
+    ],
+    "required_params": [
+      "security_pepper",
+      "admin_email",
+      "emergency_contacts"
+    ]
+  },
+  "supported_languages": [
+    "ja",
+    "en"
+  ],
+  "security": {
+    "compliance": "IPA Guidelines",
+    "data_protection": "PBKDF2-SHA512",
+    "input_validation": "Comprehensive",
+    "xss_protection": "Enabled"
+  }
+}
