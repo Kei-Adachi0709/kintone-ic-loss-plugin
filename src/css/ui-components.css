@@ -1,0 +1,1625 @@
+/**
+ * ui-components.css
+ * ICカード紛失プラグイン UIコンポーネント共通スタイル
+ * IPAガイドライン準拠・アクセシビリティ対応・レスポンシブデザイン
+ * 
+ * @author Kei-Adachi0709
+ * @version 1.0.0
+ * @date 2025-06-19
+ * @compliance IPA安全なウェブサイトの作り方準拠
+ */
+
+/* ==========================================================================
+   CSS Variables (カスタムプロパティ)
+   ========================================================================== */
+
+:root {
+  /* カラーパレット */
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --color-primary-light: #66b3ff;
+  
+  --color-secondary: #6c757d;
+  --color-secondary-dark: #545b62;
+  --color-secondary-light: #adb5bd;
+  
+  --color-success: #28a745;
+  --color-success-dark: #1e7e34;
+  --color-success-light: #71dd8a;
+  
+  --color-danger: #dc3545;
+  --color-danger-dark: #bd2130;
+  --color-danger-light: #f1a2a8;
+  
+  --color-warning: #ffc107;
+  --color-warning-dark: #d39e00;
+  --color-warning-light: #ffdf7e;
+  
+  --color-info: #17a2b8;
+  --color-info-dark: #117a8b;
+  --color-info-light: #7fcddc;
+  
+  /* グレースケール */
+  --color-white: #ffffff;
+  --color-light: #f8f9fa;
+  --color-light-gray: #e9ecef;
+  --color-gray: #6c757d;
+  --color-dark-gray: #495057;
+  --color-dark: #343a40;
+  --color-black: #000000;
+  
+  /* セマンティックカラー */
+  --color-text-primary: #212529;
+  --color-text-secondary: #6c757d;
+  --color-text-muted: #adb5bd;
+  --color-text-white: #ffffff;
+  
+  --color-background: #ffffff;
+  --color-background-light: #f8f9fa;
+  --color-background-dark: #e9ecef;
+  
+  --color-border: #dee2e6;
+  --color-border-light: #e9ecef;
+  --color-border-dark: #ced4da;
+  
+  /* ステータス・優先度カラー */
+  --color-status-received: #17a2b8;
+  --color-status-investigating: #ffc107;
+  --color-status-responding: #fd7e14;
+  --color-status-completed: #28a745;
+  --color-status-cancelled: #6c757d;
+  
+  --color-priority-urgent: #dc3545;
+  --color-priority-high: #fd7e14;
+  --color-priority-medium: #ffc107;
+  --color-priority-low: #28a745;
+  
+  /* フォント */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* スペーシング */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* ボーダー半径 */
+  --border-radius-sm: 0.125rem;
+  --border-radius-base: 0.25rem;
+  --border-radius-md: 0.375rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 0.75rem;
+  --border-radius-2xl: 1rem;
+  --border-radius-full: 9999px;
+  
+  /* シャドウ */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* アニメーション */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+  
+  /* ブレークポイント */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* ==========================================================================
+   リセット・ベーススタイル
+   ========================================================================== */
+
+/* アクセシビリティ対応のスクリーンリーダー専用クラス */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* フォーカススタイル（アクセシビリティ対応） */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ボタンのフォーカススタイル */
+button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* 非表示要素 */
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+/* ==========================================================================
+   ICカード紛失報告フォーム
+   ========================================================================== */
+
+.ic-loss-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* フォームヘッダー */
+.form-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.form-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+.form-title .icon {
+  font-size: var(--font-size-3xl);
+}
+
+/* プログレスバー */
+.progress-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-background-dark);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  border-radius: var(--border-radius-full);
+  transition: width var(--transition-base);
+}
+
+.progress-text {
+  text-align: center;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* アラート */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--border-radius-base);
+  border: 1px solid transparent;
+}
+
+.alert-info {
+  background-color: rgba(23, 162, 184, 0.1);
+  border-color: var(--color-info);
+  color: var(--color-info-dark);
+}
+
+.alert-warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  font-size: var(--font-size-lg);
+}
+
+.alert-content {
+  flex: 1;
+}
+
+/* フォームステップ */
+.form-step {
+  margin-bottom: var(--spacing-xl);
+}
+
+.form-step.hidden {
+  display: none;
+}
+
+.form-step.active {
+  animation: fadeIn var(--transition-base);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--border-radius-full);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+}
+
+/* フォームグループ */
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-base);
+}
+
+.form-group label.required::after {
+  content: ' *';
+  color: var(--color-danger);
+  font-weight: var(--font-weight-bold);
+}
+
+/* フォームコントロール */
+.form-control {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  background-clip: padding-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.form-control.valid {
+  border-color: var(--color-success);
+}
+
+.form-control.error {
+  border-color: var(--color-danger);
+}
+
+.form-control:disabled {
+  background-color: var(--color-background-dark);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* セレクトボックス */
+select.form-control {
+  cursor: pointer;
+}
+
+/* テキストエリア */
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* インプットグループ */
+.input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--color-background-dark);
+  border: 1px solid var(--color-border);
+  border-top-right-radius: var(--border-radius-base);
+  border-bottom-right-radius: var(--border-radius-base);
+}
+
+/* ラジオボタンとチェックボックス */
+.radio-group,
+.checkbox-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.radio-group legend,
+.checkbox-group legend {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-base);
+}
+
+.radio-group legend.required::after,
+.checkbox-group legend.required::after {
+  content: ' *';
+  color: var(--color-danger);
+  font-weight: var(--font-weight-bold);
+}
+
+.radio-options,
+.checkbox-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.radio-option,
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.radio-option input[type="radio"],
+.checkbox-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-option label,
+.checkbox-option label {
+  margin: 0;
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+  flex: 1;
+}
+
+/* フォームヘルプテキスト */
+.form-help {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+/* フォームエラー */
+.form-error {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  line-height: var(--line-height-normal);
+  display: none;
+}
+
+.form-error.visible {
+  display: block;
+}
+
+/* フォームナビゲーション */
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* 確認内容 */
+.confirmation-sections {
+  margin-bottom: var(--spacing-xl);
+}
+
+.confirmation-section {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--color-background-light);
+  border-radius: var(--border-radius-base);
+  border: 1px solid var(--color-border-light);
+}
+
+.confirmation-section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.confirmation-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-sm) var(--spacing-md);
+  margin: 0;
+}
+
+.confirmation-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.confirmation-value {
+  color: var(--color-text-primary);
+  margin: 0;
+  word-break: break-word;
+}
+
+/* 送信状況 */
+.submission-status {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+}
+
+.submission-success {
+  color: var(--color-success-dark);
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid var(--color-success);
+}
+
+.submission-error {
+  color: var(--color-danger-dark);
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid var(--color-danger);
+}
+
+.success-icon,
+.error-icon {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.success-title,
+.error-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+.success-content,
+.error-content {
+  margin-bottom: var(--spacing-lg);
+  line-height: var(--line-height-relaxed);
+}
+
+.emergency-contact {
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--spacing-md);
+}
+
+.phone-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+}
+
+.phone-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   ICカード紛失ダッシュボード
+   ========================================================================== */
+
+.ic-loss-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+/* ダッシュボードヘッダー */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.dashboard-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.dashboard-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.view-toggles {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+}
+
+.view-toggles .btn {
+  border-radius: 0;
+  border: none;
+  margin: 0;
+}
+
+.view-toggles .btn:first-child {
+  border-top-left-radius: var(--border-radius-base);
+  border-bottom-left-radius: var(--border-radius-base);
+}
+
+.view-toggles .btn:last-child {
+  border-top-right-radius: var(--border-radius-base);
+  border-bottom-right-radius: var(--border-radius-base);
+}
+
+/* サマリーカード */
+.dashboard-summary {
+  margin-bottom: var(--spacing-xl);
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.summary-card {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+.summary-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.card-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.card-icon {
+  font-size: var(--font-size-lg);
+  opacity: 0.7;
+}
+
+.card-value {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.card-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 特殊カード */
+.summary-card.urgent .card-value {
+  color: var(--color-danger);
+}
+
+.summary-card.in-progress .card-value {
+  color: var(--color-warning-dark);
+}
+
+.summary-card.completed .card-value {
+  color: var(--color-success);
+}
+
+.summary-card.today .card-value {
+  color: var(--color-info);
+}
+
+/* フィルター */
+.dashboard-filters {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border-light);
+}
+
+.filter-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.filter-select,
+.search-input {
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-sm);
+}
+
+.filter-clear-btn {
+  height: fit-content;
+  font-size: var(--font-size-sm);
+}
+
+/* テーブル */
+.dashboard-table-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.table-header h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.table-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.record-count {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.table-container {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.dashboard-table th {
+  background: var(--color-background-dark);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dashboard-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-light);
+  vertical-align: middle;
+}
+
+.dashboard-table tbody tr {
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.dashboard-table tbody tr:hover {
+  background-color: var(--color-background-light);
+}
+
+.dashboard-table tbody tr:focus {
+  background-color: rgba(0, 123, 255, 0.1);
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+/* ソート */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.sort-indicator {
+  font-size: var(--font-size-xs);
+  opacity: 0.7;
+  min-width: 12px;
+}
+
+/* ステータスバッジ */
+.status-badge,
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-radius: var(--border-radius-full);
+  border: 1px solid transparent;
+}
+
+/* ステータス別カラー */
+.status-received {
+  background: rgba(23, 162, 184, 0.1);
+  color: var(--color-status-received);
+  border-color: var(--color-status-received);
+}
+
+.status-investigating {
+  background: rgba(255, 193, 7, 0.1);
+  color: var(--color-status-investigating);
+  border-color: var(--color-status-investigating);
+}
+
+.status-responding {
+  background: rgba(253, 126, 20, 0.1);
+  color: var(--color-status-responding);
+  border-color: var(--color-status-responding);
+}
+
+.status-completed {
+  background: rgba(40, 167, 69, 0.1);
+  color: var(--color-status-completed);
+  border-color: var(--color-status-completed);
+}
+
+.status-cancelled {
+  background: rgba(108, 117, 125, 0.1);
+  color: var(--color-status-cancelled);
+  border-color: var(--color-status-cancelled);
+}
+
+/* 優先度別カラー */
+.priority-urgent {
+  background: rgba(220, 53, 69, 0.1);
+  color: var(--color-priority-urgent);
+  border-color: var(--color-priority-urgent);
+}
+
+.priority-high {
+  background: rgba(253, 126, 20, 0.1);
+  color: var(--color-priority-high);
+  border-color: var(--color-priority-high);
+}
+
+.priority-medium {
+  background: rgba(255, 193, 7, 0.1);
+  color: var(--color-priority-medium);
+  border-color: var(--color-priority-medium);
+}
+
+.priority-low {
+  background: rgba(40, 167, 69, 0.1);
+  color: var(--color-priority-low);
+  border-color: var(--color-priority-low);
+}
+
+/* データが空の場合 */
+.no-data-message {
+  text-align: center;
+  padding: var(--spacing-3xl);
+  color: var(--color-text-secondary);
+}
+
+.no-data-icon {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.no-data-message h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.no-data-message p {
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   共通ボタンスタイル
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+  border-radius: var(--border-radius-base);
+  transition: all var(--transition-fast);
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ボタンサイズ */
+.btn-sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-lg);
+}
+
+/* ボタンバリエーション */
+.btn-primary {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  color: var(--color-white);
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-dark);
+  border-color: var(--color-secondary-dark);
+}
+
+.btn-danger {
+  color: var(--color-white);
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--color-danger-dark);
+  border-color: var(--color-danger-dark);
+}
+
+.btn-outline {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-outline.active {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ==========================================================================
+   モーダル
+   ========================================================================== */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-modal);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-modal-backdrop);
+}
+
+.modal-content {
+  position: relative;
+  z-index: var(--z-modal);
+  background: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  max-width: 800px;
+  max-height: 90vh;
+  width: 100%;
+  overflow: hidden;
+  animation: modalSlideIn var(--transition-base);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-base);
+  transition: background-color var(--transition-fast);
+}
+
+.modal-close:hover {
+  background-color: var(--color-background-dark);
+}
+
+.modal-body {
+  padding: var(--spacing-lg);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* 詳細表示 */
+.detail-content {
+  line-height: var(--line-height-relaxed);
+}
+
+.detail-header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.detail-status {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.detail-meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.detail-sections {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.detail-section {
+  padding: var(--spacing-md);
+  background: var(--color-background-light);
+  border-radius: var(--border-radius-base);
+  border: 1px solid var(--color-border-light);
+}
+
+.detail-section h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-sm) var(--spacing-md);
+  margin: 0;
+}
+
+.detail-list dt {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.detail-list dd {
+  color: var(--color-text-primary);
+  margin: 0;
+  word-break: break-word;
+}
+
+.detail-list dd.long-text {
+  grid-column: 1 / -1;
+  margin-top: var(--spacing-xs);
+  line-height: var(--line-height-relaxed);
+  white-space: pre-wrap;
+}
+
+/* ==========================================================================
+   通知システム
+   ========================================================================== */
+
+.notification-area {
+  position: fixed;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: var(--z-tooltip);
+  max-width: 400px;
+  width: 100%;
+}
+
+.notification {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--spacing-md);
+  overflow: hidden;
+  animation: notificationSlideIn var(--transition-base);
+}
+
+@keyframes notificationSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+.notification-icon {
+  flex-shrink: 0;
+  font-size: var(--font-size-lg);
+}
+
+.notification-message {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-base);
+  transition: background-color var(--transition-fast);
+}
+
+.notification-close:hover {
+  background-color: var(--color-background-dark);
+}
+
+/* 通知タイプ別カラー */
+.notification-success {
+  border-left: 4px solid var(--color-success);
+}
+
+.notification-success .notification-icon {
+  color: var(--color-success);
+}
+
+.notification-error {
+  border-left: 4px solid var(--color-danger);
+}
+
+.notification-error .notification-icon {
+  color: var(--color-danger);
+}
+
+.notification-warning {
+  border-left: 4px solid var(--color-warning);
+}
+
+.notification-warning .notification-icon {
+  color: var(--color-warning-dark);
+}
+
+.notification-info {
+  border-left: 4px solid var(--color-info);
+}
+
+.notification-info .notification-icon {
+  color: var(--color-info);
+}
+
+/* ==========================================================================
+   ローディング
+   ========================================================================== */
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-content {
+  text-align: center;
+  padding: var(--spacing-xl);
+  background: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.loading-spinner {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--spacing-md);
+}
+
+.spinner-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 4px solid var(--color-border-light);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-ring:nth-child(2) {
+  animation-delay: -0.3s;
+  border-width: 3px;
+}
+
+.spinner-ring:nth-child(3) {
+  animation-delay: -0.6s;
+  border-width: 2px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-message {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* ==========================================================================
+   レスポンシブデザイン
+   ========================================================================== */
+
+/* タブレット */
+@media (max-width: 768px) {
+  .ic-loss-form,
+  .ic-loss-dashboard {
+    padding: var(--spacing-md);
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .dashboard-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .filter-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .dashboard-table {
+    min-width: 800px;
+  }
+
+  .modal-content {
+    margin: var(--spacing-md);
+    max-height: calc(100vh - 2rem);
+  }
+
+  .notification-area {
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    max-width: none;
+  }
+}
+
+/* モバイル */
+@media (max-width: 576px) {
+  .ic-loss-form,
+  .ic-loss-dashboard {
+    padding: var(--spacing-sm);
+  }
+
+  .form-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .dashboard-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .radio-options,
+  .checkbox-options {
+    gap: var(--spacing-md);
+  }
+
+  .form-navigation {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .form-navigation .btn {
+    width: 100%;
+  }
+
+  .dashboard-controls {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .view-toggles,
+  .btn {
+    width: 100%;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .table-info {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .confirmation-list {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+  }
+
+  .confirmation-label {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .detail-list {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+  }
+
+  .detail-list dt {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .modal-body {
+    max-height: 50vh;
+  }
+
+  .notification-area {
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+}
+
+/* 高コントラストモード対応 */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: #000000;
+    --color-text-secondary: #000000;
+  }
+
+  .form-control:focus {
+    border-width: 2px;
+  }
+
+  .btn:focus {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* 動画効果を無効にする設定への対応 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ダークモード対応（将来の拡張用） */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #1a1a1a;
+    --color-background-light: #2d2d2d;
+    --color-background-dark: #404040;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #b3b3b3;
+    --color-border: #404040;
+    --color-border-light: #2d2d2d;
+  }
+}
+
+/* 印刷用スタイル */
+@media print {
+  .btn,
+  .modal,
+  .notification-area,
+  .loading-overlay,
+  .dashboard-controls,
+  .form-navigation {
+    display: none !important;
+  }
+
+  .ic-loss-form,
+  .ic-loss-dashboard {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-table {
+    border: 1px solid #000;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    border: 1px solid #000;
+  }
+}

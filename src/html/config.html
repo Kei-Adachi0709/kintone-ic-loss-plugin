@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICカード紛失対応プラグイン設定</title>
+    <link rel="stylesheet" href="../css/config.css">
+</head>
+<body>
+    <div class="config-container">
+        <!-- セキュリティ警告バナー (IPA準拠) -->
+        <div class="security-banner">
+            <span class="security-icon">🔒</span>
+            <span>IPAガイドライン準拠・セキュリティ設定画面</span>
+            <span class="compliance-badge">IPA Compliant</span>
+        </div>
+
+        <header class="config-header">
+            <h1>🔐 ICカード紛失対応プラグイン設定</h1>
+            <p class="config-description">
+                IPAガイドライン「安全なウェブサイトの作り方」完全準拠<br>
+                <strong>重要:</strong> 設定変更は管理者権限が必要です
+            </p>
+        </header>
+
+        <main class="config-main">
+            <!-- セキュリティ設定セクション -->
+            <section class="config-section security-section">
+                <h2>🛡️ セキュリティ設定 (IPA章節1-6準拠)</h2>
+                
+                <!-- ペッパー設定 -->
+                <div class="form-group critical">
+                    <label for="security-pepper" class="required">
+                        ペッパー値 (共通秘密値)
+                        <span class="security-note">※ 32バイト以上の暗号学的乱数</span>
+                    </label>
+                    <div class="pepper-input-group">
+                        <input type="password" id="security-pepper" 
+                               placeholder="自動生成または手動入力"
+                               class="security-input"
+                               autocomplete="new-password"
+                               spellcheck="false">
+                        <button type="button" id="generate-pepper" class="generate-btn">
+                            🎲 自動生成
+                        </button>
+                        <button type="button" id="toggle-pepper-visibility" class="toggle-btn">
+                            👁️ 表示
+                        </button>
+                    </div>
+                    <div class="security-indicator">
+                        <span class="strength-meter">
+                            <span class="meter-fill" id="pepper-strength"></span>
+                        </span>
+                        <span class="strength-text" id="pepper-strength-text">未設定</span>
+                    </div>
+                </div>
+
+                <!-- ハッシュ化設定 -->
+                <div class="form-group">
+                    <label for="hash-iterations">ストレッチング回数</label>
+                    <div class="input-with-help">
+                        <input type="number" id="hash-iterations" 
+                               value="100000" min="100000" max="500000"
+                               class="security-input">
+                        <small class="help-text">
+                            IPA推奨: 100,000回以上 (現在: <span id="current-iterations">100,000</span>回)
+                        </small>
+                    </div>
+                </div>
+
+                <!-- ソルト長設定 -->
+                <div class="form-group">
+                    <label for="salt-length">ソルト長 (バイト)</label>
+                    <select id="salt-length" class="security-input">
+                        <option value="32" selected>32バイト (推奨)</option>
+                        <option value="64">64バイト (高セキュリティ)</option>
+                        <option value="128">128バイト (最高セキュリティ)</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- プラグイン機能設定 -->
+            <section class="config-section function-section">
+                <h2>⚙️ プラグイン機能設定</h2>
+                
+                <!-- プラグイン有効/無効 (重要操作) -->
+                <div class="form-group critical">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="plugin-enabled" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">プラグインを有効にする</span>
+                    </label>
+                    <div class="critical-operation-notice">
+                        ⚠️ 重要操作: この変更には管理者認証が必要です
+                    </div>
+                </div>
+
+                <!-- 対象ユーザー設定 -->
+                <div class="form-group">
+                    <label for="target-users">対象ユーザー設定</label>
+                    <div class="user-selection">
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="user-scope" value="all" checked>
+                                <span>全ユーザー</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="user-scope" value="groups">
+                                <span>指定グループのみ</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="user-scope" value="users">
+                                <span>指定ユーザーのみ</span>
+                            </label>
+                        </div>
+                        <textarea id="target-users" rows="3" 
+                                  placeholder="グループ名またはユーザー名をカンマ区切りで入力"
+                                  class="form-input" disabled></textarea>
+                    </div>
+                </div>
+
+                <!-- 緊急連絡先設定 -->
+                <div class="form-group">
+                    <label for="emergency-contacts" class="required">緊急連絡先</label>
+                    <textarea id="emergency-contacts" rows="3" 
+                              placeholder="管理者メールアドレスをカンマ区切りで入力"
+                              class="form-input" required></textarea>
+                    <small class="help-text">
+                        ICカード紛失報告時に自動通知されます
+                    </small>
+                </div>
+            </section>
+
+            <!-- セキュリティ監査設定 -->
+            <section class="config-section audit-section">
+                <h2>📊 セキュリティ監査設定</h2>
+                
+                <!-- 監査ログ設定 -->
+                <div class="form-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="audit-enabled" class="toggle-input" checked>
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">監査ログを有効にする</span>
+                    </label>
+                </div>
+
+                <!-- ログ保持期間 -->
+                <div class="form-group">
+                    <label for="log-retention">ログ保持期間 (日)</label>
+                    <select id="log-retention" class="form-input">
+                        <option value="30">30日</option>
+                        <option value="90" selected>90日 (推奨)</option>
+                        <option value="180">180日</option>
+                        <option value="365">365日</option>
+                    </select>
+                </div>
+
+                <!-- セキュリティヘルスチェック表示 -->
+                <div class="health-check-display">
+                    <h3>セキュリティヘルスチェック</h3>
+                    <div id="security-health-status" class="health-status">
+                        <div class="health-score">
+                            <span class="score-value" id="security-score">--</span>
+                            <span class="score-grade" id="security-grade">--</span>
+                        </div>
+                        <div class="health-details" id="health-details">
+                            読み込み中...
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 設定操作ボタン -->
+        <footer class="config-footer">
+            <div class="button-group">
+                <button type="button" id="test-security" class="btn btn-info">
+                    🧪 セキュリティテスト実行
+                </button>
+                <button type="button" id="reset-config" class="btn btn-warning">
+                    🔄 デフォルトに戻す
+                </button>
+                <button type="button" id="cancel-config" class="btn btn-secondary">
+                    キャンセル
+                </button>
+                <button type="button" id="save-config" class="btn btn-primary">
+                    💾 設定を保存
+                </button>
+            </div>
+        </footer>
+
+        <!-- 設定確認ダイアログ (PDF章節1-8準拠) -->
+        <div id="confirmation-dialog" class="dialog-overlay" style="display: none;">
+            <div class="dialog-content">
+                <h3>🔒 重要操作の確認</h3>
+                <p class="dialog-message" id="confirmation-message">
+                    この操作は重要な設定変更を伴います。
+                </p>
+                <div class="auth-input-group">
+                    <label for="admin-password">管理者パスワード:</label>
+                    <input type="password" id="admin-password" 
+                           placeholder="パスワードを入力してください"
+                           class="dialog-input">
+                </div>
+                <div class="dialog-buttons">
+                    <button type="button" id="confirm-operation" class="btn btn-danger">
+                        実行する
+                    </button>
+                    <button type="button" id="cancel-operation" class="btn btn-secondary">
+                        キャンセル
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IPAコンプライアンス表示 -->
+    <div class="compliance-footer">
+        <p>
+            📋 本プラグインは <strong>IPA「安全なウェブサイトの作り方」</strong> に完全準拠しています<br>
+            実装準拠章節: 1-4 入力値の検証 | 1-6 重要情報の保護 | 1-8 重要な処理での再認証
+        </p>
+    </div>
+
+    <script src="../js/config/config.js"></script>
+</body>
+</html>
