@@ -9,7 +9,7 @@
 
 module.exports = {
   // テスト環境
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   
   // テストファイルのパターン
   testMatch: [
@@ -55,14 +55,29 @@ module.exports = {
       testEnvironment: 'node'
     },
     {
+      displayName: 'UI Integration Tests',
+      testMatch: ['<rootDir>/tests/ui/**/*.js'],
+      testEnvironment: 'jsdom'
+    },
+    {
       displayName: 'Unit Tests',
       testMatch: ['<rootDir>/tests/unit/**/*.js'],
       testEnvironment: 'node'
-    },
-    {
-      displayName: 'Integration Tests',
-      testMatch: ['<rootDir>/tests/integration/**/*.js'],
-      testEnvironment: 'node'
     }
-  ]
+  ],
+  
+  // カバレッジ閾値
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80, 
+      lines: 80,      statements: 80
+    },
+    './src/js/security/': {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    }
+  }
 };

@@ -71,82 +71,154 @@ class ICLossDesktopApp {
       // 初期化完了通知
       CommonUtils.showNotification('ICカード紛失対応プラグインが準備完了しました', 'success');
       
-    } catch (error) {
-      console.error('アプリケーション初期化エラー:', error);
+    } catch (error) {      console.error('アプリケーション初期化エラー:', error);
       CommonUtils.showNotification('プラグインの初期化に失敗しました', 'error');
     }
   }
-      this.hashManager = new SecureHashManager({
-        iterations: parseInt(config.hash_iterations) || 100000,
-        saltLength: parseInt(config.salt_length) || 32,
-        pepper: atob(config.security_pepper || '')
-      });
 
-      // UIコンポーネント初期化
-      await this.initializeUI();
-      
-      this.isInitialized = true;
-      console.log('ICカード紛失対応プラグインが初期化されました');
-
-    } catch (error) {
-      console.error('プラグイン初期化エラー:', error);
-      this.showError('プラグインの初期化に失敗しました');
-    }
+  /**
+   * セキュリティマネージャー初期化
+   * @param {Object} config - プラグイン設定
+   */
+  async initializeSecurityManager(config) {
+    this.hashManager = new SecureHashManager({
+      iterations: parseInt(config.hash_iterations) || 100000,
+      saltLength: parseInt(config.salt_length) || 32,
+      pepper: atob(config.security_pepper || '')
+    });
   }
-
   /**
    * ユーザー権限確認
    * @param {Object} config - プラグイン設定
    * @returns {boolean} 権限有無
    */
   checkUserPermission(config) {
-    if (config.user_scope === 'all') {
+    if (!this.currentUser) return false;
+
+    // 管理者権限確認
+    if (this.currentUser.isAdmin) return true;
+
+    // 許可された部署の確認
+    const allowedDepartments = (config.allowed_departments || '').split(',').map(d => d.trim());
+    if (allowedDepartments.length > 0 && allowedDepartments.includes('すべて')) {
       return true;
     }
 
-    const targetUsers = (config.target_users || '').split(',').map(u => u.trim());
-    
-    if (config.user_scope === 'users') {
-      return targetUsers.includes(this.currentUser.code);
+    // 個別ユーザー確認
+    const allowedUsers = (config.allowed_users || '').split(',').map(u => u.trim());
+    if (allowedUsers.includes(this.currentUser.code) || allowedUsers.includes(this.currentUser.name)) {
+      return true;
     }
-    
-    if (config.user_scope === 'groups') {
-      return this.currentUser.groups.some(group => 
-        targetUsers.includes(group.code)
-      );
-    }
-    
+
     return false;
+  }
+  /**
+   * UI初期化
+   */
+  async initializeUI() {
+    try {
+      // CSSファイル読み込み
+      await this.loadCSS();
+      
+      // メインコンテナ作成
+      this.createMainContainer();
+      
+      // 初期表示（ダッシュボード）
+      this.showDashboard();
+      
+    } catch (error) {
+      console.error('UI初期化エラー:', error);
+      throw error;
+    }
   }
 
   /**
-   * UIコンポーネント初期化
+   * CSSファイル読み込み
    */
-  async initializeUI() {
-    // レコード一覧画面
-    kintone.events.on('app.record.index.show', (event) => {
-      this.setupIndexView(event);
-      return event;
-    });
+  async loadCSS() {
+    const cssFiles = [
+      'src/css/desktop.css',
+      'src/css/ui-components.css'
+    ];
 
-    // レコード詳細画面
-    kintone.events.on('app.record.detail.show', (event) => {
-      this.setupDetailView(event);
-      return event;
-    });
+    for (const cssFile of cssFiles) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = kintone.plugin.app.getProxyURI() + cssFile;
+      document.head.appendChild(link);
+    }
+  }
 
-    // レコード作成画面
-    kintone.events.on('app.record.create.show', (event) => {
-      this.setupCreateView(event);
-      return event;
-    });
+  /**
+   * メインコンテナ作成
+   */
+  createMainContainer() {
+    // 既存のコンテナがあれば削除
+    const existingContainer = document.getElementById('ic-loss-main-container');
+    if (existingContainer) {
+      existingContainer.remove();
+    }
 
-    // レコード編集画面
-    kintone.events.on('app.record.edit.show', (event) => {
-      this.setupEditView(event);
-      return event;
-    });
+    // メインコンテナ作成
+    const container = document.createElement('div');
+    container.id = 'ic-loss-main-container';
+    container.className = 'ic-loss-main-container';
+    container.innerHTML = `
+      <div class="main-header">
+        <div class="header-content">
+          <h1 class="main-title">
+            <span class="icon" aria-hidden="true">🔒</span>
+            ICカード紛失対応システム
+          </h1>
+          <div class="header-actions">
+            <button type="button" 
+                    class="btn btn-outline header-btn"
+                    id="toggle-view-btn"
+                    aria-label="表示切り替え">
+              <span class="btn-text">新規報告</span>
+            </button>
+            <button type="button" 
+                    class="btn btn-danger header-btn"
+                    id="emergency-btn"
+                    aria-label="緊急報告">
+              <span class="icon" aria-hidden="true">🚨</span>
+              緊急報告
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="main-content" id="main-content">
+        <!-- コンテンツエリア -->
+      </div>
+    `;
 
+    // Kintoneのメインエリアに追加
+    const kintoneContent = document.querySelector('.contents-body') || document.body;
+    kintoneContent.appendChild(container);
+  }
+  /**
+   * イベントリスナー設定
+   */
+  setupEventListeners() {
+    // 表示切り替えボタン
+    const toggleViewBtn = document.getElementById('toggle-view-btn');
+    if (toggleViewBtn) {
+      toggleViewBtn.addEventListener('click', () => this.toggleView());
+    }
+
+    // 緊急報告ボタン
+    const emergencyBtn = document.getElementById('emergency-btn');
+    if (emergencyBtn) {
+      emergencyBtn.addEventListener('click', () => this.showEmergencyReport());
+    }
+
+    // Kintoneイベント
+    kintone.events.on('app.record.index.show', (event) => this.handleIndexShow(event));
+    kintone.events.on('app.record.detail.show', (event) => this.handleDetailShow(event));
+    kintone.events.on('app.record.create.show', (event) => this.handleCreateShow(event));
+    kintone.events.on('app.record.edit.show', (event) => this.handleEditShow(event));
+    
     // レコード保存前
     kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], (event) => {
       return this.handleRecordSubmit(event);
