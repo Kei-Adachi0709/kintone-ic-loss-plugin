@@ -1,0 +1,413 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-06-19",
+  "region": "nagoya",
+  "compliance": "IPA Guidelines",
+  "transportationProviders": {
+    "jr_tokai": {
+      "id": "jr_tokai",
+      "name": "JR東海",
+      "nameEn": "JR Central",
+      "category": "railway",
+      "icCards": ["TOICA", "Suica", "ICOCA"],
+      "primaryIC": "TOICA",
+      "contact": {
+        "phone": "050-3772-3910",
+        "email": "lost-and-found@jr-central.co.jp",
+        "businessHours": "9:00-18:00 (平日)",
+        "emergencyContact": "24時間自動音声対応あり"
+      },
+      "urls": {
+        "main": "https://railway.jr-central.co.jp/lost-and-found/",
+        "icCard": "https://railway.jr-central.co.jp/lost-and-found/ic-card/",
+        "faq": "https://railway.jr-central.co.jp/faq/ic-card/"
+      },
+      "cardNumberFormats": {
+        "TOICA": {
+          "pattern": "^TO\\d{14}$",
+          "length": 16,
+          "example": "TO1234567890****",
+          "displayName": "TOICA（JR東海発行）",
+          "prefix": "TO",
+          "digitCount": 14
+        },
+        "Suica": {
+          "pattern": "^JE\\d{15}$",
+          "length": 17,
+          "example": "JE123456789012***",
+          "displayName": "Suica（相互利用）",
+          "prefix": "JE",
+          "digitCount": 15
+        },
+        "ICOCA": {
+          "pattern": "^IC\\d{14}$",
+          "length": 16,
+          "example": "IC1234567890****",
+          "displayName": "ICOCA（相互利用）",
+          "prefix": "IC",
+          "digitCount": 14
+        }
+      },
+      "stopProcedure": {
+        "method": "電話連絡",
+        "requiredInfo": ["カード番号", "氏名", "紛失日時", "紛失場所"],
+        "urgencyLevel": "HIGH",
+        "processingTime": "即座",
+        "notes": "新幹線チケットレス決済への影響確認が必要",
+        "additionalSteps": [
+          "EX-ICサービス利用停止確認",
+          "JR東海エクスプレス予約確認",
+          "定期券情報確認"
+        ]
+      },
+      "serviceAreas": [
+        "東海道新幹線",
+        "東海道本線",
+        "中央本線",
+        "関西本線",
+        "高山本線"
+      ]
+    },
+    "kintetsu": {
+      "id": "kintetsu",
+      "name": "近畿日本鉄道（近鉄）",
+      "nameEn": "Kintetsu Railway",
+      "category": "railway",
+      "icCards": ["TOICA", "ICOCA", "PiTaPa"],
+      "primaryIC": "TOICA",
+      "contact": {
+        "phone": "0570-200-349",
+        "email": "customer@kintetsu.co.jp",
+        "businessHours": "9:00-17:30 (平日)",
+        "emergencyContact": "主要駅での窓口対応"
+      },
+      "urls": {
+        "main": "https://www.kintetsu.co.jp/railway/lost/",
+        "icCard": "https://www.kintetsu.co.jp/railway/ticket/ic/",
+        "faq": "https://www.kintetsu.co.jp/railway/faq/"
+      },
+      "cardNumberFormats": {
+        "TOICA": {
+          "pattern": "^TO\\d{14}$",
+          "length": 16,
+          "example": "TO1234567890****",
+          "displayName": "TOICA（近鉄対応）",
+          "prefix": "TO",
+          "digitCount": 14
+        },
+        "ICOCA": {
+          "pattern": "^IC\\d{14}$",
+          "length": 16,
+          "example": "IC1234567890****",
+          "displayName": "ICOCA（近鉄対応）",
+          "prefix": "IC",
+          "digitCount": 14
+        },
+        "PiTaPa": {
+          "pattern": "^PT\\d{14}$",
+          "length": 16,
+          "example": "PT1234567890****",
+          "displayName": "PiTaPa（関西圏連携）",
+          "prefix": "PT",
+          "digitCount": 14
+        }
+      },
+      "stopProcedure": {
+        "method": "電話連絡または駅窓口",
+        "requiredInfo": ["カード番号", "氏名", "紛失日時", "最後の利用駅"],
+        "urgencyLevel": "MEDIUM",
+        "processingTime": "30分以内",
+        "notes": "名古屋・大阪間の特急利用への影響確認",
+        "additionalSteps": [
+          "特急券予約状況確認",
+          "定期券区間確認",
+          "ポイント残高確認"
+        ]
+      },
+      "serviceAreas": [
+        "名古屋線",
+        "大阪線",
+        "奈良線",
+        "京都線",
+        "南大阪線"
+      ]
+    },
+    "nagoya_subway": {
+      "id": "nagoya_subway",
+      "name": "名古屋市営地下鉄",
+      "nameEn": "Nagoya Municipal Subway",
+      "category": "subway",
+      "icCards": ["manaca", "TOICA"],
+      "primaryIC": "manaca",
+      "contact": {
+        "phone": "052-972-3922",
+        "email": "ic-card@kotsu.city.nagoya.jp",
+        "businessHours": "9:00-17:00 (平日)",
+        "emergencyContact": "各駅務室での対応可能"
+      },
+      "urls": {
+        "main": "https://www.kotsu.city.nagoya.jp/jp/pc/lost/",
+        "icCard": "https://www.kotsu.city.nagoya.jp/jp/pc/manaca/",
+        "faq": "https://www.kotsu.city.nagoya.jp/jp/pc/faq/"
+      },
+      "cardNumberFormats": {
+        "manaca": {
+          "pattern": "^MA\\d{14}$",
+          "length": 16,
+          "example": "MA1234567890****",
+          "displayName": "manaca（名古屋市交通局）",
+          "prefix": "MA",
+          "digitCount": 14
+        },
+        "TOICA": {
+          "pattern": "^TO\\d{14}$",
+          "length": 16,
+          "example": "TO1234567890****",
+          "displayName": "TOICA（相互利用）",
+          "prefix": "TO",
+          "digitCount": 14
+        }
+      },
+      "stopProcedure": {
+        "method": "電話連絡または駅務室",
+        "requiredInfo": ["カード番号", "氏名", "住所", "紛失日時"],
+        "urgencyLevel": "MEDIUM",
+        "processingTime": "15分以内",
+        "notes": "manacaポイント・定期券の保護措置が重要",
+        "additionalSteps": [
+          "manacaポイント残高確認",
+          "定期券情報保護",
+          "名古屋市バス連携確認"
+        ]
+      },
+      "serviceAreas": [
+        "東山線",
+        "名城線",
+        "名港線",
+        "鶴舞線",
+        "桜通線",
+        "上飯田線"
+      ]
+    },
+    "meitetsu": {
+      "id": "meitetsu",
+      "name": "名古屋鉄道（名鉄）",
+      "nameEn": "Nagoya Railroad (Meitetsu)",
+      "category": "railway",
+      "icCards": ["manaca", "TOICA"],
+      "primaryIC": "manaca",
+      "contact": {
+        "phone": "052-582-5076",
+        "email": "ic-support@meitetsu.co.jp",
+        "businessHours": "9:00-17:00 (平日)",
+        "emergencyContact": "主要駅改札での対応"
+      },
+      "urls": {
+        "main": "https://www.meitetsu.co.jp/railway/station_info/lost/",
+        "icCard": "https://www.meitetsu.co.jp/railway/ticket/ic/",
+        "faq": "https://www.meitetsu.co.jp/railway/faq/"
+      },
+      "cardNumberFormats": {
+        "manaca": {
+          "pattern": "^MA\\d{14}$",
+          "length": 16,
+          "example": "MA1234567890****",
+          "displayName": "manaca（名鉄対応）",
+          "prefix": "MA",
+          "digitCount": 14
+        },
+        "TOICA": {
+          "pattern": "^TO\\d{14}$",
+          "length": 16,
+          "example": "TO1234567890****",
+          "displayName": "TOICA（相互利用）",
+          "prefix": "TO",
+          "digitCount": 14
+        }
+      },
+      "stopProcedure": {
+        "method": "電話連絡または駅窓口",
+        "requiredInfo": ["カード番号", "氏名", "紛失日時", "定期券区間"],
+        "urgencyLevel": "MEDIUM",
+        "processingTime": "20分以内",
+        "notes": "中部国際空港アクセス特急への影響確認",
+        "additionalSteps": [
+          "μ-SKY利用確認",
+          "空港特急予約確認",
+          "名鉄百貨店での利用確認"
+        ]
+      },
+      "serviceAreas": [
+        "名古屋本線",
+        "犬山線",
+        "常滑線",
+        "河和線",
+        "知多新線",
+        "空港線"
+      ]
+    },
+    "nagoya_bus": {
+      "id": "nagoya_bus",
+      "name": "名古屋市バス",
+      "nameEn": "Nagoya City Bus",
+      "category": "bus",
+      "icCards": ["manaca", "TOICA"],
+      "primaryIC": "manaca",
+      "contact": {
+        "phone": "052-972-3922",
+        "email": "bus-ic@kotsu.city.nagoya.jp",
+        "businessHours": "9:00-17:00 (平日)",
+        "emergencyContact": "営業所での対応可能"
+      },
+      "urls": {
+        "main": "https://www.kotsu.city.nagoya.jp/jp/pc/lost/",
+        "icCard": "https://www.kotsu.city.nagoya.jp/jp/pc/manaca/",
+        "faq": "https://www.kotsu.city.nagoya.jp/jp/pc/faq/"
+      },
+      "cardNumberFormats": {
+        "manaca": {
+          "pattern": "^MA\\d{14}$",
+          "length": 16,
+          "example": "MA1234567890****",
+          "displayName": "manaca（市バス対応）",
+          "prefix": "MA",
+          "digitCount": 14
+        },
+        "TOICA": {
+          "pattern": "^TO\\d{14}$",
+          "length": 16,
+          "example": "TO1234567890****",
+          "displayName": "TOICA（市バス相互利用）",
+          "prefix": "TO",
+          "digitCount": 14
+        }
+      },
+      "stopProcedure": {
+        "method": "電話連絡",
+        "requiredInfo": ["カード番号", "氏名", "紛失日時"],
+        "urgencyLevel": "LOW",
+        "processingTime": "30分以内",
+        "notes": "地下鉄との共通利用のため地下鉄窓口でも対応可",
+        "additionalSteps": [
+          "地下鉄との共通利用確認",
+          "バス定期券確認"
+        ]
+      },
+      "serviceAreas": [
+        "市内全域",
+        "基幹バス路線",
+        "一般路線バス",
+        "深夜バス"
+      ]
+    },
+    "meitetsu_bus": {
+      "id": "meitetsu_bus",
+      "name": "名鉄バス",
+      "nameEn": "Meitetsu Bus",
+      "category": "bus",
+      "icCards": ["manaca", "TOICA"],
+      "primaryIC": "manaca",
+      "contact": {
+        "phone": "052-582-0489",
+        "email": "bus-support@meitetsu.co.jp",
+        "businessHours": "9:00-17:00 (平日)",
+        "emergencyContact": "営業所での対応"
+      },
+      "urls": {
+        "main": "https://www.meitetsu.co.jp/bus/",
+        "icCard": "https://www.meitetsu.co.jp/bus/ticket/ic/",
+        "faq": "https://www.meitetsu.co.jp/bus/faq/"
+      },
+      "cardNumberFormats": {
+        "manaca": {
+          "pattern": "^MA\\d{14}$",
+          "length": 16,
+          "example": "MA1234567890****",
+          "displayName": "manaca（名鉄バス対応）",
+          "prefix": "MA",
+          "digitCount": 14
+        },
+        "TOICA": {
+          "pattern": "^TO\\d{14}$",
+          "length": 16,
+          "example": "TO1234567890****",
+          "displayName": "TOICA（名鉄バス相互利用）",
+          "prefix": "TO",
+          "digitCount": 14
+        }
+      },
+      "stopProcedure": {
+        "method": "電話連絡",
+        "requiredInfo": ["カード番号", "氏名", "紛失日時"],
+        "urgencyLevel": "LOW",
+        "processingTime": "30分以内",
+        "notes": "名鉄電車との連携利用確認が重要",
+        "additionalSteps": [
+          "名鉄電車との連携確認",
+          "高速バス利用確認"
+        ]
+      },
+      "serviceAreas": [
+        "愛知県内",
+        "岐阜県内",
+        "高速バス路線",
+        "空港バス"
+      ]
+    }
+  },
+  "commonICCards": {
+    "TOICA": {
+      "issuer": "JR東海",
+      "region": "東海地方",
+      "interoperability": ["Suica", "ICOCA", "PASMO", "PiTaPa", "SUGOCA", "nimoca", "Kitaca"],
+      "services": ["電車", "バス", "電子マネー", "チケットレス"]
+    },
+    "manaca": {
+      "issuer": "名古屋市交通局・名鉄",
+      "region": "名古屋圏",
+      "interoperability": ["TOICA", "Suica", "ICOCA"],
+      "services": ["地下鉄", "バス", "名鉄", "電子マネー"]
+    },
+    "Suica": {
+      "issuer": "JR東日本",
+      "region": "関東地方",
+      "interoperability": ["TOICA", "ICOCA", "PASMO", "PiTaPa", "SUGOCA", "nimoca", "Kitaca"],
+      "services": ["電車", "バス", "電子マネー", "モバイル"]
+    },
+    "ICOCA": {
+      "issuer": "JR西日本",
+      "region": "関西地方",
+      "interoperability": ["TOICA", "Suica", "PASMO", "PiTaPa", "SUGOCA", "nimoca", "Kitaca"],
+      "services": ["電車", "バス", "電子マネー"]
+    },
+    "PiTaPa": {
+      "issuer": "関西圏交通事業者",
+      "region": "関西地方",
+      "interoperability": ["TOICA", "Suica", "ICOCA", "PASMO"],
+      "services": ["電車", "バス", "後払い"]
+    }
+  },
+  "securityConfig": {
+    "validation": {
+      "maxInputLength": 1000,
+      "allowedCharacters": "^[a-zA-Z0-9\\-_\\s\\u3040-\\u309F\\u30A0-\\u30FF\\u4E00-\\u9FAF]+$",
+      "dangerousPatterns": [
+        "<script",
+        "javascript:",
+        "on\\w+\\s*=",
+        "data:text/html",
+        "vbscript:"
+      ]
+    },
+    "masking": {
+      "cardNumberVisibleDigits": 4,
+      "maskCharacter": "*",
+      "showPrefix": true
+    },
+    "sanitization": {
+      "htmlEscape": true,
+      "urlEscape": true,
+      "sqlEscape": true
+    }
+  }
+}
